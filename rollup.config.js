@@ -1,6 +1,10 @@
 import typescript from 'rollup-plugin-typescript2';
 import { terser } from 'rollup-plugin-terser';
+import { camelCase } from '@zodash/camel-case';
+
 import pkg from './package.json';
+
+const iifeName = !pkg.name.indexOf('@') ? camelCase(pkg.name) : camelCase(pkg.name.split('/')[1]);
 
 export default {
   input: 'src/index.ts', // our source file
@@ -16,7 +20,8 @@ export default {
     {
       file: pkg.browser,
       format: 'iife',
-      name: 'wordsParser' // the global which can be used in a browser
+      // the global which can be used in a browser
+      name: iifeName, // 'wordsParser'
     }
   ],
   external: [
