@@ -69,3 +69,5 @@ lib
 coverage.lcov
 
 tmp
+
+.rpt2_cache/
