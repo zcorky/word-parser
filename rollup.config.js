@@ -4,7 +4,7 @@ import { camelCase } from '@zodash/camel-case';
 
 import pkg from './package.json';
 
-const iifeName = !pkg.name.indexOf('@') ? camelCase(pkg.name) : camelCase(pkg.name.split('/')[1]);
+const umdName = pkg.name.indexOf('@') === -1 ? camelCase(pkg.name) : camelCase(pkg.name.split('/')[1]);
 
 export default {
   input: 'src/index.ts', // our source file
@@ -17,12 +17,17 @@ export default {
     //   file: pkg.module,
     //   format: 'es' // the preferred format
     // },
+    // {
+    //   file: pkg.browser,
+    //   format: 'iife',
+    //   // the global which can be used in a browser
+    //   name: iifeName, // 'wordsParser'
+    // }
     {
       file: pkg.browser,
-      format: 'iife',
-      // the global which can be used in a browser
-      name: iifeName, // 'wordsParser'
-    }
+      format: 'umd',
+      name: umdName,
+    },
   ],
   external: [
     ...Object.keys(pkg.dependencies || {})
