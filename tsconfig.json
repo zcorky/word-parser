@@ -1,16 +1,17 @@
 {
-    "compilerOptions": {
-        "target": "es2018", // Node.js 6
-		"module": "commonjs",
+	"compilerOptions": {
+		"target": "es2018", // Node.js 6
+		"module": "es2015",
 		"moduleResolution": "node",
 		"strictNullChecks": true,
 		"noImplicitThis": true,
 		// "noUnusedLocals": true,
-		"lib": ["es2018"],
+		"lib": [
+			"es2018"
+		],
 		"declaration": true,
-		"sourceMap": true,
+		"sourceMap": false,
 		"removeComments": true,
-
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"resolveJsonModule": true,
@@ -24,9 +25,10 @@
 		"noFallthroughCasesInSwitch": true,
 		"noEmitOnError": true,
 		// "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
-
-        "outDir": "lib"
-    },
-    "include": ["src/**/*.ts"]
+		"skipLibCheck": true,
+		"outDir": "lib"
+	},
+	"include": [
+		"src/**/*.ts"
+	]
 }
