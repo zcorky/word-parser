@@ -1,6 +1,6 @@
 {
   "name": "@zcorky/words-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "parse and transform word in text, use custom renderers for words",
   "main": "lib/index.js",
   "browser": "lib/index.min.js",
