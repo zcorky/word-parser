@@ -10,6 +10,7 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
 
   _words.forEach((word, index) => {
     // left word
+    console.log(`word: (${word.start}, ${pos})`);
     if (word.start !== pos) {
       // before custom
       const startWord: WordRender<Args> = {
@@ -18,7 +19,6 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
         end: word.start,
         type: RenderType.TEXT,
       };
-      pos = word.end;
 
       tokenizers.push(startWord);
     }
@@ -29,12 +29,13 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
       type: RenderType.CUSTOM,
     };
     tokenizers.push(keyWord);
+    pos = word.end;
     
     // the last word and end at not textLength
-    if (index === wordsLength - 1 && word.end !== textLength) {
+    if (index === wordsLength - 1 && pos !== textLength) {
       const endWord: WordRender<Args> = {
-        text: text.slice(word.end, textLength),
-        start: word.end,
+        text: text.slice(pos, textLength),
+        start: pos,
         end: text.length,
         type: RenderType.TEXT,
       };
