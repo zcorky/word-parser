@@ -64,6 +64,7 @@ describe('chinese', () => {
 
     const token = parser.parse(TEXT, words);
     const tokenizer = parser.transform(TEXT, token);
+    console.log(tokenizer.map(e => e.text));
     // >=n
     // <= 2n + 1
     expect(tokenizer.length).toBeGreaterThan(words.length);
@@ -117,6 +118,26 @@ describe('chinese', () => {
 
     const words: parser.Word<any>[] = [
       { text: '雷特迈星' },
+      { text: '感染' },
+      { text: '内酯类抗生素' },
+      { text: '支原体肺炎' },
+    ];
+
+    const token = parser.parse(TEXT, words);
+    const tokenizer = parser.transform(TEXT, token);
+
+    const finalText = tokenizer.map(e => e.text).join('');
+    expect(finalText.length).toEqual(TEXT.length);
+  });
+
+  it('the same words, should not changetext origin length', () => {
+    const TEXT = '雷特迈星抗感染，予患儿静滴大环内酯类抗生素治疗6天后仍有发热,考虑难治性重症肺炎支原体肺炎';
+
+    const words: parser.Word<any>[] = [
+      { text: '雷特迈' },
+      { text: '雷特迈' },
+      { text: '雷特迈星' },
+      { text: '雷特迈' },
       { text: '感染' },
       { text: '内酯类抗生素' },
       { text: '支原体肺炎' },

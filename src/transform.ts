@@ -9,9 +9,22 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
   let pos = 0;
 
   _words.forEach((word, index) => {
+    // if the word not on the text pos, just give up it.
+    // that's the word maybe contain before word
+    //
+    // such: ['abcd', 'abc'] should only render 'abcd', not render 'abc'
+    //    => pos > word.end
+    // such: ['abc', 'abcd'] should only render 'abc', not render 'abcd',
+    //    => pos + word.text.length > word.end
+    //    => more: if abc is the last word, should get the last word
+    // such: ['abcd', 'abcd'] should only render one 'abcd'
+    //    => pos === word.end
+    if (pos >= word.end || (index !== wordsLength - 1 && pos + word.text.length > word.end)) {
+      return ;
+    }
+
     // left word
-    console.log(`word: (${word.start}, ${pos})`);
-    if (word.start !== pos) {
+    if (word.start > pos) {
       // before custom
       const startWord: WordRender<Args> = {
         text: text.slice(pos, word.start),
