@@ -149,4 +149,19 @@ describe('chinese', () => {
     const finalText = tokenizer.map(e => e.text).join('');
     expect(finalText.length).toEqual(TEXT.length);
   });
+
+  it('no words, should render full text', () => {
+    const TEXT = '雷特迈星抗感染，予患儿静滴大环内酯类抗生素治疗6天后仍有发热,考虑难治性重症肺炎支原体肺炎';
+
+    const words: parser.Word<any>[] = [
+
+    ];
+
+    const token = parser.parse(TEXT, words);
+    const tokenizer = parser.transform(TEXT, token);
+
+    const finalText = tokenizer.map(e => e.text).join('');
+    expect(finalText.length).toEqual(TEXT.length);
+    expect(finalText).toEqual(TEXT);
+  });
 });
