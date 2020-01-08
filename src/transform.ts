@@ -18,8 +18,24 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
     //    => pos + word.text.length > word.end
     //    => more: if abc is the last word, should get the last word
     // such: ['abcd', 'abcd'] should only render one 'abcd'
-    //    => pos === word.end
-    if (pos >= word.end || (index !== wordsLength - 1 && pos + word.text.length > word.end)) {
+    //      but maybe not have rest text
+    //    => pos === word.end && pos === textLength - 1
+    if (pos >= word.end) {
+      if (index === wordsLength - 1 && pos !== textLength) {
+        const endWord: WordRender<Args> = {
+          text: text.slice(pos, textLength),
+          start: pos,
+          end: textLength,
+          type: RenderType.TEXT,
+        };
+        
+        tokenizers.push(endWord);
+      }
+
+      return ;
+    }
+
+    if ((index !== wordsLength - 1 && pos + word.text.length > word.end)) {
       return ;
     }
 
@@ -43,13 +59,13 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
     };
     tokenizers.push(keyWord);
     pos = word.end;
-    
+
     // the last word and end at not textLength
     if (index === wordsLength - 1 && pos !== textLength) {
       const endWord: WordRender<Args> = {
         text: text.slice(pos, textLength),
         start: pos,
-        end: text.length,
+        end: textLength,
         type: RenderType.TEXT,
       };
       
