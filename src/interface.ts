@@ -15,6 +15,7 @@ export enum RenderType {
 
 export interface WordRender<Args extends any> extends WordWithPosition<Args> {
   type: RenderType;
+  originalText: string;
 }
 
 export interface Renderer<Args, ReturnType> {

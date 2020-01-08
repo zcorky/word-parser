@@ -24,6 +24,7 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
       if (index === wordsLength - 1 && pos !== textLength) {
         const endWord: WordRender<Args> = {
           text: text.slice(pos, textLength),
+          originalText: text.slice(pos, textLength),
           start: pos,
           end: textLength,
           type: RenderType.TEXT,
@@ -44,6 +45,7 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
       // before custom
       const startWord: WordRender<Args> = {
         text: text.slice(pos, word.start),
+        originalText: text.slice(pos, word.start),
         start: pos,
         end: word.start,
         type: RenderType.TEXT,
@@ -56,6 +58,7 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
     const keyWord: WordRender<Args> = {
       ...word,
       type: RenderType.CUSTOM,
+      originalText: text.slice(word.start, word.end),
     };
     tokenizers.push(keyWord);
     pos = word.end;
@@ -64,6 +67,7 @@ export function transform<Args = {}>(text: string, words: WordWithPosition<Args>
     if (index === wordsLength - 1 && pos !== textLength) {
       const endWord: WordRender<Args> = {
         text: text.slice(pos, textLength),
+        originalText: text.slice(pos, textLength),
         start: pos,
         end: textLength,
         type: RenderType.TEXT,
